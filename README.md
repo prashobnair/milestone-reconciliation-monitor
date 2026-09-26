@@ -12,10 +12,11 @@ Requires Python 3.10+; runtime uses only the standard library. From the repo roo
 
 ```sh
 PYTHONPATH=src python3 -m milestone_monitor.cli examples/drift.json
+PYTHONPATH=src python3 -m milestone_monitor.zoho_sample examples/zoho-shaped-portfolio.json
 PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
-The fixture has three fictional milestones. Design sign-off dates are the same instant in IST and UTC, so they are not flagged. Data load has a stale tracker record, due-date mismatch and status mismatch. Launch has an owner mismatch. No trial account, API key, Docker, or external connection is needed. Only synthetic data belongs here.
+The first fixture has three fictional milestones. The second simulates two Zoho Projects-like project exports and PM-owned baselines; see `docs/ZOHO_SAMPLE.md` for exactly which fields are sourced from published Zoho REST examples and which are invented for the demo. `notcompleted` is mapped to `open_unknown`, so the importer does not pretend to know planned versus in-progress state. Design sign-off dates are the same instant in IST and UTC, so they are not flagged. Data load has a stale tracker record, due-date mismatch and status mismatch. Launch has an owner mismatch. No trial account, API key, Docker, or external connection is needed. Only synthetic data belongs here.
 
 ## Current limits
 
