@@ -47,8 +47,8 @@ def _record(raw: object, source: str) -> dict[str, object]:
     if not isinstance(owner, str) or not owner.strip() or len(owner) > 120:
         raise ContractError('invalid_record', f'{source} owner must be 1-120 characters')
     status = raw.get('status')
-    if status not in ('planned', 'in_progress', 'done') or not isinstance(status, str):
-        raise ContractError('invalid_record', f'{source} status must be planned, in_progress or done')
+    if status not in ('planned', 'in_progress', 'done', 'open_unknown') or not isinstance(status, str):
+        raise ContractError('invalid_record', f'{source} status must be planned, in_progress, done or open_unknown')
     due = _timestamp(raw.get('due_at'), f'{source}.due_at')
     updated = _timestamp(raw.get('updated_at'), f'{source}.updated_at')
     return {'key': key, 'title': title.strip(), 'owner': owner.strip(), 'status': status,
@@ -104,7 +104,7 @@ def reconcile(snapshot: Mapping[str, object]) -> dict[str, object]:
             findings.append({'key': key, 'title': title, 'owner': owner, 'kind': 'due_at_mismatch',
                              'plan': planned['due_at'].isoformat(), 'tracker': tracked['due_at'].isoformat(),
                              'requires_review': True})
-        if planned['status'] != tracked['status']:
+        if planned['status'] != tracked['status'] and not (tracked['status'] == 'open_unknown' and planned['status'] in ('planned', 'in_progress')):
             findings.append({'key': key, 'title': title, 'owner': owner, 'kind': 'status_mismatch',
                              'plan': planned['status'], 'tracker': tracked['status'], 'requires_review': True})
         if planned['owner'] != tracked['owner']:
