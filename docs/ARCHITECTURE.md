@@ -1,0 +1,5 @@
+# Initial design record
+
+Input: a version-1 snapshot with project ID, explicit `as_of`, and plan/tracker lists keyed by milestone ID. Timestamps must carry a timezone; comparison normalizes instants to UTC. Exact plan/tracker ties need no review. Stale records, missing source rows, due-date, status and owner disagreements become findings with the milestone key and responsible plan-side owner. Invalid schema, duplicate milestone keys, naive timestamps and future updates fail rather than disappearing into an alert.
+
+The first slice is pure and read-only. A later monitor should persist a fingerprint per finding, retain an audit history of observed and resolved states, and suppress duplicate notifications. Escalation must require a grounded owner and explicit channel scope. No production connection or notification is part of this repo yet.
