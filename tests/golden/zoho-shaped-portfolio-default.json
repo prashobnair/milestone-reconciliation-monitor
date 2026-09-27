@@ -1,0 +1,53 @@
+{
+  "schema_version": "1",
+  "project_count": 2,
+  "finding_count": 3,
+  "projects": [
+    {
+      "project_name": "Marigold rollout",
+      "schema_version": "1",
+      "project_id": "fictional-marigold-implementation",
+      "as_of": "2026-09-26T03:30:00+00:00",
+      "status": "needs_review",
+      "findings": [
+        {
+          "key": "data-load",
+          "title": "First data load",
+          "owner": "Data specialist",
+          "kind": "stale_source",
+          "detail": "tracker",
+          "age_days": 10,
+          "requires_review": true
+        },
+        {
+          "key": "data-load",
+          "title": "First data load",
+          "owner": "Data specialist",
+          "kind": "due_at_mismatch",
+          "plan": "2026-10-12T11:30:00+00:00",
+          "tracker": "2026-10-15T11:30:00+00:00",
+          "requires_review": true
+        },
+        {
+          "key": "launch",
+          "title": "Launch",
+          "owner": "Customer PM",
+          "kind": "owner_mismatch",
+          "plan": "Customer PM",
+          "tracker": "Delivery PM",
+          "requires_review": true
+        }
+      ],
+      "milestone_count": 3
+    },
+    {
+      "project_name": "Indigo migration",
+      "schema_version": "1",
+      "project_id": "fictional-indigo-implementation",
+      "as_of": "2026-09-26T03:30:00+00:00",
+      "status": "aligned",
+      "findings": [],
+      "milestone_count": 3
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --python 3.11 --group dev
+      - run: uv run --no-sync ruff check .
+      - run: uv run --no-sync ruff format --check .
+      - run: uv run --no-sync mypy --strict src
+  test:
+    name: test (${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --python ${{ matrix.python }} --group dev
+      - run: uv run --no-sync pytest -q --cov=milestone_monitor --cov-branch --cov-report=xml --cov-fail-under=80
+      - run: uv run --no-sync coverage report --include='*/core.py' --fail-under=90
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.python }}
+          path: coverage.xml
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --python 3.11 --group dev
+      - run: uv run --no-sync python -m milestone_monitor.cli examples/drift.json > demo.json
+      - run: uv run --no-sync python -m milestone_monitor.zoho_sample examples/zoho-shaped-portfolio.json > portfolio.json
+      - run: uv run --no-sync python -m milestone_monitor.state_cli /tmp/milestone-review.sqlite examples/drift.json > transitions.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-demo-json
+          path: |
+            demo.json
+            portfolio.json
+            transitions.json
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --python 3.11 --group dev
+      - run: uv run --no-sync bandit -q -r src
+      - run: uv run --no-sync pip-audit --local
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

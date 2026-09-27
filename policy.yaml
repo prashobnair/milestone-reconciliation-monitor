@@ -1,0 +1,5 @@
+{
+  "stale_after_days": 7,
+  "stale_age_bands": [7, 14, 30],
+  "status_compatible": [["planned", "open_unknown"], ["in_progress", "open_unknown"]]
+}
