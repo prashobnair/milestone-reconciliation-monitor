@@ -2,7 +2,7 @@
 
 # Milestone Reconciliation Monitor
 
-A private portfolio prototype using fictional implementation milestones. It compares a project plan with a tracker snapshot, preserves both sources, and gives a project manager a review list. It does **not** change either system, select a winning date, send alerts, or connect to a real app.
+An offline portfolio prototype using fictional implementation milestones. It compares a project plan with a tracker snapshot, preserves both sources, and gives a project manager a review list. It does **not** change either system, select a winning date, send alerts, or connect to a real app.
 
 ## Why a separate project
 
