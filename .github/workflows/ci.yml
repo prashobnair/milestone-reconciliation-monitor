@@ -58,6 +58,6 @@ jobs:
       - run: uv sync --locked --python 3.11 --group dev
       - run: uv run --no-sync bandit -q -r src
       - run: uv run --no-sync pip-audit --local
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
