@@ -20,7 +20,7 @@ The first fixture has three fictional milestones. The second simulates two Zoho 
 
 ## Current limits
 
-This is a pure reconciliation slice, not yet a monitor. No SQLite run history, duplicate-alert suppression, scheduler, UI, or owner-resolution workflow is present. The seven-day stale threshold is a demonstrator rule, not an external SLA. Missing records are flagged for review; neither source silently wins. Next increment: durable run/alert state and tests for repeated snapshots, changed snapshots and recovery. Then a local demo view and CI.
+This is a local reconciliation and review-state slice, not a connected or scheduled monitor. SQLite tracks finding transitions and avoids duplicate history rows on unchanged snapshots; it does not send alerts, schedule jobs, offer a UI, or resolve owners. The seven-day stale threshold is a demonstrator rule, not an external SLA. Missing records are flagged for review; neither source silently wins. A future increment could add a local demo view and CI, then a source adapter only after verifying current Zoho API contracts.
 
 ## Persist review changes across runs
 
