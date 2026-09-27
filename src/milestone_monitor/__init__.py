@@ -1,3 +1,5 @@
 """Synthetic milestone reconciliation demonstrator."""
-from .core import reconcile, ContractError
-__all__ = ['reconcile', 'ContractError']
+
+from .core import ContractError, reconcile
+
+__all__ = ["ContractError", "reconcile"]
