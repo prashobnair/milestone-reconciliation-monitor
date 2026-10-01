@@ -9,7 +9,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --locked --python 3.11 --group dev
       - run: uv run --no-sync ruff check .
@@ -23,7 +23,7 @@ jobs:
       matrix:
         python: ['3.11', '3.12', '3.13']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --locked --python ${{ matrix.python }} --group dev
       - run: uv run --no-sync pytest -q --cov=milestone_monitor --cov-branch --cov-report=xml --cov-fail-under=80
@@ -35,7 +35,7 @@ jobs:
   demo:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --locked --python 3.11 --group dev
       - run: uv run --no-sync python -m milestone_monitor.cli examples/drift.json > demo.json
@@ -51,7 +51,7 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: astral-sh/setup-uv@v6
