@@ -28,7 +28,7 @@ jobs:
       - run: uv sync --locked --python ${{ matrix.python }} --group dev
       - run: uv run --no-sync pytest -q --cov=milestone_monitor --cov-branch --cov-report=xml --cov-fail-under=80
       - run: uv run --no-sync coverage report --include='*/core.py' --fail-under=90
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: coverage-${{ matrix.python }}
           path: coverage.xml
@@ -41,7 +41,7 @@ jobs:
       - run: uv run --no-sync python -m milestone_monitor.cli examples/drift.json > demo.json
       - run: uv run --no-sync python -m milestone_monitor.zoho_sample examples/zoho-shaped-portfolio.json > portfolio.json
       - run: uv run --no-sync python -m milestone_monitor.state_cli /tmp/milestone-review.sqlite examples/drift.json > transitions.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: synthetic-demo-json
           path: |
